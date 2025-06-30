@@ -18,8 +18,6 @@ export default function PostForm({ post }) {
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData);
 
-    // const [previewUrl, setPreviewUrl] = useState("")
-
     const submit = async (data) => {
         if (post) {
             const file = data.image[0] ? await service.uploadFile(data.image[0]) : null;
@@ -75,7 +73,8 @@ export default function PostForm({ post }) {
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-2/3 px-2">
+            {/* Left Column - Full width on mobile, 2/3 on large screens */}
+            <div className="w-full lg:w-2/3 px-0 lg:px-2">
                 <Input 
                     label="Title :"
                     placeholder="Title"
@@ -93,7 +92,9 @@ export default function PostForm({ post }) {
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
-            <div className="w-1/3 px-2">
+            
+            {/* Right Column - Full width on mobile, 1/3 on large screens */}
+            <div className="w-full lg:w-1/3 px-0 lg:px-2 mt-6 lg:mt-0">
                 <Input
                     label="Featured Image :"
                     type="file"
@@ -101,28 +102,39 @@ export default function PostForm({ post }) {
                     accept="image/png, image/jpg, image/jpeg, image/gif"
                     {...register("image", { required: !post })}
                 />
+                
                 {post && (
                     <div className="w-full mb-4">
-                        <img //view? view:"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"
-                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin' || "https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"} //service.getFilePreview(post.featuredImage)
+                        <img
+                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin' || "https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"}
                             alt={post.title}
-                            className="rounded-lg"
+                            className="rounded-lg w-full max-w-[300px] mx-auto lg:mx-0"
                             onError={(e) => {
-                                e.currentTarget.onerror = null; // prevent loops
+                                e.currentTarget.onerror = null;
                                 e.currentTarget.src = "https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading";
                             }}
                         />
                     </div>
                 )}
-                <Select
-                    options={["active", "inactive"]}
-                    label="Status"
-                    className="mb-4 mt-7.5"
-                    {...register("status", { required: true })}
-                />
-                <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
-                </Button>
+                
+                <div className="flex flex-col md:flex-row lg:flex-col gap-4">
+                    <div className="flex-grow">
+                        <Select
+                            options={["active", "inactive"]}
+                            label="Status"
+                            className="w-full"
+                            {...register("status", { required: true })}
+                        />
+                    </div>
+                    
+                    <Button 
+                        type="submit" 
+                        bgColor={post ? "bg-green-500" : undefined} 
+                        className="w-full md:w-auto lg:w-full"
+                    >
+                        {post ? "Update" : "Submit"}
+                    </Button>
+                </div>
             </div>
         </form>
     );
