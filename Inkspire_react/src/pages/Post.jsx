@@ -39,7 +39,7 @@ export default function Post() {
             <Container>
                 <div className="bg-amber-50 w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin'}
+                        src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin'? service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin':"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"}
                         alt={post.title}
                         className="rounded-xl"
                     />

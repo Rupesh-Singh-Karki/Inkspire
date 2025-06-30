@@ -103,8 +103,8 @@ export default function PostForm({ post }) {
                 />
                 {post && (
                     <div className="w-full mb-4">
-                        <img
-                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin'} //service.getFilePreview(post.featuredImage)
+                        <img //view? view:"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"
+                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin'? service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin':"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"} //service.getFilePreview(post.featuredImage)
                             alt={post.title}
                             className="rounded-lg"
                         />
