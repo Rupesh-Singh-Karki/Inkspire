@@ -72,7 +72,7 @@ export default function PostForm({ post }) {
 
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+        <form onSubmit={handleSubmit(submit)} className="min-h-screen flex flex-wrap">
             {/* Left Column - Full width on mobile, 2/3 on large screens */}
             <div className="w-full lg:w-2/3 px-0 lg:px-2">
                 <Input 
