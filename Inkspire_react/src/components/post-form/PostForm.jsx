@@ -104,9 +104,13 @@ export default function PostForm({ post }) {
                 {post && (
                     <div className="w-full mb-4">
                         <img //view? view:"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"
-                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin'? service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin':"https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"} //service.getFilePreview(post.featuredImage)
+                            src={service.getFilePreview(post.featuredImage).replace(/\/preview(?=\?)/, '/view') + '&mode=admin' || "https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading"} //service.getFilePreview(post.featuredImage)
                             alt={post.title}
                             className="rounded-lg"
+                            onError={(e) => {
+                                e.currentTarget.onerror = null; // prevent loops
+                                e.currentTarget.src = "https://placehold.co/600x400/1E3A8A/ffffff?text=Image+Loading";
+                            }}
                         />
                     </div>
                 )}
